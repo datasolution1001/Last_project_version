@@ -5,9 +5,14 @@ import { memo, useEffect } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import axios from 'axios';
 import { useState } from 'react';
+
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
 function ParkingAllocationGests() {
   // const widgets = useSelector(selectWidgets);
   // const { data, title } = widgets?.issues;
+
   const [data, setData] = useState(null);
     useEffect(() => {
     
@@ -23,7 +28,7 @@ function ParkingAllocationGests() {
       const dayUnformatted = currentDate.getDate();
       const day = `${dayUnformatted}`;
 
-      const response = await axios.get("http://127.0.0.1:8000/reports/Parking/get_nbGuest", {
+      const response = await axios.get(`${url}/reports/Parking/get_nbGuest`, {
         params: {
           month,
           day,

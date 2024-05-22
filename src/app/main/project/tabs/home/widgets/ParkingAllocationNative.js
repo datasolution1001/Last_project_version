@@ -6,6 +6,10 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
+
 function ParkingAllocationNative() {
   const [data, setData] = useState(null);
     useEffect(() => {
@@ -24,7 +28,7 @@ function ParkingAllocationNative() {
       const dayUnformatted = currentDate.getDate();
       const day = `${dayUnformatted}`;
 
-      const response = await axios.get("http://127.0.0.1:8000/reports/Parking/get_nbNative", {
+      const response = await axios.get(`${url}/reports/Parking/get_nbNative`, {
         params: {
           month,
           day,

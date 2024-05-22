@@ -7,12 +7,14 @@ import {
 import axios from 'axios';
 import FuseUtils from '@fuse/utils';
 
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
 export const getRecords = createAsyncThunk(
   'adminApp/admins/getRecords',
   async (params, { getState }) => {
     console.log("haboub");
     
-    const response = await axios.get('http://127.0.0.1:8000/records/Parking/get_records_all');
+    const response = await axios.get(`${url}/records/Parking/get_records_all`);
     console.log("hab");
     console.log(response.data);
     console.log("habi");

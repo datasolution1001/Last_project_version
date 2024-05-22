@@ -14,13 +14,14 @@ import { newCard } from './cardsSlice';
 
 
 
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
 
 
 export const getBoard = createAsyncThunk(
   'contactsApp/contacts/getContacts',
   async (boardId, { dispatch }) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/users/Parking/`);
+      const response = await axios.get(`${url}/users/Parking/`);
       const data = await response.data;
       return data;
     } catch (error) {

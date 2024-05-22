@@ -1,7 +1,6 @@
 import Paper from '@mui/material/Paper';
 import { lighten, useTheme } from '@mui/material/styles';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
+
 import Typography from '@mui/material/Typography';
 import { memo, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -9,7 +8,10 @@ import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import { selectWidgets } from '../../../store/widgetsSlice';
 import axios from 'axios';
-import { RepeatOneSharp } from '@mui/icons-material';
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
+
 function ParkingChart() {
   const theme = useTheme();
   const [nbGuest, setNbGuest] = useState(null);
@@ -89,8 +91,7 @@ function ParkingChart() {
           tab.push([day, formatedmonth])
         }
         
-        console.log('/*************+++++++++++++++++++++++++')
-        console.log(tab)
+      
         return tab
       }
       setLabels(dateTypo(sixDays))
@@ -98,14 +99,14 @@ function ParkingChart() {
         const month = dateTypo(sixDays)[i][1];
         const day = dateTypo(sixDays)[i][0];
 
-        const responseNative = await axios.get("http://127.0.0.1:8000/reports/Parking/get_nbNativeEnters", {
+        const responseNative = await axios.get(`${url}/reports/Parking/get_nbNativeEnters`, {
         params: {
           month,
           day,
         },
         
       });
-      const responseGuest = await axios.get("http://127.0.0.1:8000/reports/Parking/get_nbGuestEnters", {
+      const responseGuest = await axios.get(`${url}/reports/Parking/get_nbGuestEnters`, {
         params: {
           month,
           day,
@@ -119,12 +120,12 @@ function ParkingChart() {
       setNativeTab(tabNative);
     
 
-      const guest = await axios.get("http://127.0.0.1:8000/reports/Parking/get_nbGuest_of_the_month", {
+      const guest = await axios.get(`${url}/reports/Parking/get_nbGuest_of_the_month`, {
         params: {
           month,
         },
       });
-      const native = await axios.get("http://127.0.0.1:8000/reports/Parking/get_nbNative_of_month", {
+      const native = await axios.get(`${url}/reports/Parking/get_nbNative_of_month`, {
         params: {
           month,
         },

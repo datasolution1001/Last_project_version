@@ -8,11 +8,14 @@ import axios from 'axios';
 import FuseUtils from '@fuse/utils';
 import { addContact, removeContact, updateContact } from './contactSlice';
 
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
 export const getContacts = createAsyncThunk(
   'contactsApp/contacts/getContacts',
   async (params, { getState }) => {
     
-    const response = await axios.get('http://127.0.0.1:8000/users/Parking/');
+    const response = await axios.get(`${url}/users/Parking/`);
     console.log('hab****');
     console.log(response);
     
@@ -43,8 +46,7 @@ export const selectFilteredContacts = createSelector(
 export const selectGroupedFilteredContacts = createSelector(
   [selectFilteredContacts],
   (contacts) => {
-    console.log(contacts)
-    console.log("/********/")
+    
     return contacts
       .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
       .reduce((r, e) => {

@@ -6,6 +6,10 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
+
 function ParkingCapacityAvailable() {
   
 
@@ -26,7 +30,7 @@ function ParkingCapacityAvailable() {
       const dayUnformatted = currentDate.getDate();
       const day = `${dayUnformatted}`;
 
-      const response = await axios.get("http://127.0.0.1:8000/reports/Parking/get_available_Spots", {
+      const response = await axios.get(`${url}/reports/Parking/get_available_Spots`, {
         params: {
           month,
           day,

@@ -10,6 +10,8 @@ import { string } from 'prop-types';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'app/store/userSlice';
   
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
   export const getRecords = createAsyncThunk(
     'adminApp/admins/getRecords',
     async (params, { getState }) => {
@@ -20,7 +22,7 @@ import { selectUser } from 'app/store/userSlice';
         
    // Retrieve the adminID from the user data
    const adminID = user.id;
-      const response = await axios.get(`http://127.0.0.1:8000/records/Parking/get_records/${adminID}`);
+      const response = await axios.get(`${url}/records/Parking/get_records/${adminID}`);
       console.log("hab");
       console.log(response.data);
       console.log("habi");

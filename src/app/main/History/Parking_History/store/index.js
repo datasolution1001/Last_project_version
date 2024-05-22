@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import contacts from './ParkingSlice';
+import contacts from './contactsSlice';
 
 const reducer = combineReducers({
   contacts

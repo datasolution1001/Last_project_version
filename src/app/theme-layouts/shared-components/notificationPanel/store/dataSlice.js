@@ -1,22 +1,20 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// export const getNotifications = createAsyncThunk('notificationPanel/getData', async () => {
-//   const response = await axios.get('http://127.0.0.1:8000/usersInprocess/Parking/Processing');
-//   const data = await response.data;
 
-//   return data;
-// });
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
 
 export const dismissAll = createAsyncThunk('notificationPanel/dismissAll', async () => {
-  const response = await axios.delete('http://127.0.0.1:8000/usersInprocess/Parking/delete_all_progress_users/');
+  const response = await axios.delete(`${url}/usersInprocess/Parking/delete_all_progress_users/`);
   await response.data;
 
   return true;
 });
 
 export const dismissItem = createAsyncThunk('notificationPanel/dismissItem', async (id) => {
-  const response = await axios.delete(`http://127.0.0.1:8000/usersInprocess/Parking/delete_user_in_progress${id}`);
+  const response = await axios.delete(`${url}/usersInprocess/Parking/delete_user_in_progress${id}`);
   await response.data;
 
   return id;

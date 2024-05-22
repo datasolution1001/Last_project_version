@@ -10,7 +10,7 @@ import {
   selectFilteredContacts,
   selectSearchText,
   setContactsSearchText,
-} from './store/ParkingSlice';
+} from './store/contactsSlice';
 
 function ParkingHeader(props) {
   const dispatch = useDispatch();

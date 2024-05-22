@@ -1,10 +1,13 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
 export const getProjects = createAsyncThunk(
   'records/Parking/get_records_all',
   async () => {
-    const response = await axios.get('http://127.0.0.1:8000/records/Parking/get_records_all');
+    const response = await axios.get(`${url}/records/Parking/get_records_all`);
     return response.data;
   }
 );

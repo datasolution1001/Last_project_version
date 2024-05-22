@@ -4,6 +4,9 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'app/store/userSlice';
 
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
+
 function PasswordChange() {
     // State variables to hold the form input values
     const [currentPassword, setCurrentPassword] = useState('');
@@ -26,7 +29,7 @@ function PasswordChange() {
 
         try {
             // Make an API request to update the password
-            const response = await axios.put('http://127.0.0.1:8000/Auth/update-password', {
+            const response = await axios.put(`${url}/Auth/update-password`, {
                id,
                 currentPassword,
                 newPassword,

@@ -2,14 +2,11 @@ import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import Typography from '@mui/material/Typography';
+import { selectFilteredContacts , selectSortedContacts} from './store/contactsSlice';
+import ParkingListItem from './ParkingListItem';
 import themesConfig from "../../../configs/themesConfig";
 import { InputLabel } from '@mui/material';
 import Button from '@mui/material/Button';
-import ParkingListItem from './ParkingListItem';
-import { selectFilteredContacts , selectSortedContacts} from './store/ParkingSlice';
-
-
-
 
 function ParkingList(props) {
   const filteredData = useSelector(selectFilteredContacts);
@@ -58,10 +55,8 @@ function ParkingList(props) {
             <tr>
             <th className='sticky top-0 bg-gray-200 text-gray-700 text-center text-base w-[5%] py-[2rem]'> N° </th>
             <th className="sticky top-0 bg-gray-200 text-gray-700 text-center text-base px-8 ">FullName</th>
-            <th className="sticky top-0 bg-gray-200 text-gray-700 text-center text-base px-8 ">Method</th>
             <th className="sticky top-0 bg-gray-200 text-gray-700 text-center text-base px-8 ">Time</th>
             <th  className="sticky top-0 bg-gray-200 text-gray-700 text-center text-base px-8 ">Action</th>
-            <th  className="sticky top-0 bg-gray-200 text-gray-700 text-center text-base px-8 ">Image Camera</th>
           </tr></thead>
           <tbody style={{backgroundColor : themesConfig.default.palette.background.paper}}>
           
@@ -118,4 +113,3 @@ function ParkingList(props) {
 }
 
 export default ParkingList;
-s

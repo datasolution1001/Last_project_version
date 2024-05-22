@@ -6,6 +6,7 @@ import BoardModel from '../model/BoardModel';
 /**
  * Get Boards
  */
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
 
 
 export const approvedUser = createAsyncThunk(
@@ -13,14 +14,14 @@ export const approvedUser = createAsyncThunk(
    async (id) => {
   console.log("created");
   console.log(id)
-  const response = await axios.get(`http://127.0.0.1:8000/usersInprocess/Parking/Approved_Processing/${id}`);
+  const response = await axios.get(`${url}/usersInprocess/Parking/Approved_Processing/${id}`);
   await response.data;
 
   return id;
 });
 
 export const getBoards = createAsyncThunk('scrumboardApp/boards/getusersInProcess', async () => {
-  const response = await axios.get('http://127.0.0.1:8000/usersInprocess/Parking/Processing');
+  const response = await axios.get(`${url}/usersInprocess/Parking/Processing`);
   const data = await response.data;
 
   return data;
@@ -29,7 +30,7 @@ export const deleteUserInProgress = createAsyncThunk(
   'scrumboardApp/boards/deleteUserInProgress',
    async (id) => {
   console.log("created");
-  const response = await axios.delete(`http://127.0.0.1:8000/usersInprocess/Parking/delete_user_in_progress${id}`);
+  const response = await axios.delete(`${url}/usersInprocess/Parking/delete_user_in_progress${id}`);
   await response.data;
 
   return id;

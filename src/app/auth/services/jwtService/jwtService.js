@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from 'app/store/userSlice';
 
 /* eslint-disable camelcase */
-
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
 class JwtService extends FuseUtils.EventEmitter {
   
   init() {
@@ -67,7 +67,7 @@ class JwtService extends FuseUtils.EventEmitter {
   signInWithEmailAndPassword = (email, password) => {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://127.0.0.1:8000/Auth/Parking/logIn", {
+        .get(`${url}/Auth/Parking/logIn`, {
           params: {
             email,
             password,
@@ -143,7 +143,7 @@ class JwtService extends FuseUtils.EventEmitter {
     }
     return new Promise((resolve, reject) => {
       axios
-       .post('http://127.0.0.1:8000/Auth/refresh-token', { r: refreshToken })
+       .post(`${url}/Auth/refresh-token`, { r: refreshToken })
         .then((response) => {
           console.log(response)
           if (response.data.userData) {

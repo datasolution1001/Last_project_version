@@ -6,6 +6,10 @@ import { useSelector } from 'react-redux';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
+const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
+
+
 function ParkingCapacityOccupied() {
   const [data, setData] = useState(null);
     useEffect(() => {
@@ -24,7 +28,7 @@ function ParkingCapacityOccupied() {
       const dayUnformatted = currentDate.getDate();
       const day = `${dayUnformatted}`;
 
-      const response = await axios.get("http://127.0.0.1:8000/reports/Parking/get_ocuppied_Spots", {
+      const response = await axios.get(`${url}/reports/Parking/get_ocuppied_Spots`, {
         params: {
           month,
           day,
