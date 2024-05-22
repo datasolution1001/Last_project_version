@@ -9,7 +9,7 @@ import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import ParkingHeader from './ParkingHeader';
 import ParkingList from './ParkingList';
 import reducer from './store';
-import { getContacts } from './store/contactsSlice';
+import { getLogs } from './store/ParkingSlice';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -25,7 +25,7 @@ function ParkingApp(props) {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   useDeepCompareEffect(() => {
-    dispatch(getContacts());
+    dispatch(getLogs());
   }, [dispatch]);
 
   useEffect(() => {

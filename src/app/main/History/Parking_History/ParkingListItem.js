@@ -2,8 +2,9 @@
 import ListItemText from '@mui/material/ListItemText';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useState } from 'react';
-
+import Modal from './model/ModalImage';
 import { format, parseISO } from 'date-fns';
+import { Button } from '@mui/base';
 
 function ParkingListItem(props) {
   const { contact ,ki } = props; 
@@ -15,6 +16,7 @@ function ParkingListItem(props) {
       return dateString;
     }
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -35,12 +37,25 @@ function ParkingListItem(props) {
                  
                   <ListItemText
                     classes={{ root: 'm-0', primary: 'font-medium leading-5 truncate' }}
-                    primary={contact.name} 
+                    primary={contact.user_name} 
                   />
                   </td>
+                  <td className='text-center px-8 py-20'>
+                 {contact.Method === "Camera Action" ?( 
+                 <ListItemText
+                   classes={{ root: 'm-0', primary: 'font-medium leading-5 truncate' }}
+                   primary={contact.License} 
+                 />):
+                 <ListItemText
+                 classes={{ root: 'm-0', primary: 'font-medium leading-5 truncate' }}
+                 primary={contact.Method} 
+               />
+                
+                }
+                 </td>
                     
                     
-                    <td className='text-center px-8 py-20'>{formattedDate(contact.actionTime)}</td>
+                    <td className='text-center px-8 py-20'>{formattedDate(contact.date+'T'+contact.time)}</td>
                     <td className='text-center justify-center px-8 py-20'>
                     
                     {contact.action === "exit" ? ( 
@@ -58,6 +73,27 @@ function ParkingListItem(props) {
                   </div>
         
                     }</td>
+
+
+                  <td className='text-center px-8 py-20'>
+                 {contact.Method === "Camera Action" ?( 
+                //  <div onClick={} className='bg-green-500 rounded-xl flex p-10 mx-auto items-center w-96'>
+                //   See Image
+                //  </div>
+                <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-12 py-7 bg-blue-600 text-white rounded-md"
+        >
+          See Image
+        </button>
+                ):
+                 <ListItemText
+                 classes={{ root: 'm-0', primary: 'font-medium leading-5 truncate' }}
+                 primary={"_"} 
+               />
+                
+                }
+                 </td>
             
                 </>
             
@@ -99,10 +135,15 @@ function ParkingListItem(props) {
 
 
       </table> */}
-      
+        <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        imageSrc={"data:image/png;base64,"+contact.imageData}
+      />
       
     </>
   );
 }
 
 export default ParkingListItem;
+s

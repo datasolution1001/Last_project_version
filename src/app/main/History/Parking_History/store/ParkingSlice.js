@@ -7,12 +7,12 @@ import {
 import axios from 'axios';
 import FuseUtils from '@fuse/utils';
 
-export const getContacts = createAsyncThunk(
-  'contactsApp/contacts/getContacts',
+export const getLogs = createAsyncThunk(
+  'parkingApp/parking/getlogs',
   async (params, { getState }) => {
     console.log("haboub");
     
-    const response = await axios.get('http://127.0.0.1:8000/reports/Parking/get_all_logs');
+    const response = await axios.get('http://192.168.25.30:8000/reports/Parking/get_all_logs');
     console.log("hab");
     console.log(response.data);
     console.log("habi");
@@ -69,8 +69,8 @@ export const selectGroupedFilteredContacts = createSelector(
   }
 );
 
-const contactsSlice = createSlice({
-  name: 'contactsApp/contacts',
+const ParkingSlice = createSlice({
+  name: 'parkingApp/parking',
   initialState: contactsAdapter.getInitialState({
     searchText: '',
   }),
@@ -83,7 +83,7 @@ const contactsSlice = createSlice({
     },
   },
   extraReducers: {
-    [getContacts.fulfilled]: (state, action) => {
+    [getLogs.fulfilled]: (state, action) => {
       const { data, routeParams } = action.payload;
       contactsAdapter.setAll(state, data);
       state.searchText = '';
@@ -91,6 +91,6 @@ const contactsSlice = createSlice({
   },
 });
 
-export const { setContactsSearchText } = contactsSlice.actions;
+export const { setContactsSearchText } = ParkingSlice.actions;
 
-export default contactsSlice.reducer;
+export default ParkingSlice.reducer;
