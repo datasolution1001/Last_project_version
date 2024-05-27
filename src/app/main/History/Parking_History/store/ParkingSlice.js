@@ -7,15 +7,12 @@ import {
 import axios from 'axios';
 import FuseUtils from '@fuse/utils';
 
-
-const url = process.env.REACT_APP_BACKEND_IP_ADDRESS
-
-export const getContacts = createAsyncThunk(
-  'contactsApp/contacts/getContacts',
+export const getLogs = createAsyncThunk(
+  'parkingApp/parking/getlogs',
   async (params, { getState }) => {
     console.log("haboub");
     
-    const response = await axios.get(`${url}/reports/Parking/get_all_logs`);
+    const response = await axios.get('http://192.168.25.30:8000/reports/Parking/get_all_logs');
     console.log("hab");
     console.log(response.data);
     console.log("habi");
@@ -26,27 +23,27 @@ export const getContacts = createAsyncThunk(
   }
 );
 
-const contactsAdapter = createEntityAdapter({});
+const parkingsAdapter = createEntityAdapter({});
 
-export const selectSearchText = ({ contactsApp }) => contactsApp.contacts.searchText;
+export const selectSearchText = ({ ParkingApp }) => ParkingApp.parkings.searchText;
 
-export const { selectAll: selectContacts, selectById: selectContactsById } =
-  contactsAdapter.getSelectors((state) => state.contactsApp.contacts);
+export const { selectAll: selectparkings, selectById: selectparkingsById } =
+  parkingsAdapter.getSelectors((state) => state.ParkingApp.parkings);
 
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectSearchText],
-  (contacts, searchText) => {
+export const selectFilteredparkings = createSelector(
+  [selectparkings, selectSearchText],
+  (parkings, searchText) => {
     if (searchText.length === 0) {
-      return contacts;
+      return parkings;
     }
-    return FuseUtils.filterArrayByString(contacts, searchText);
+    return FuseUtils.filterArrayByString(parkings, searchText);
   }
 );
-export const selectSortedContacts = createSelector(
-  [selectFilteredContacts],
-  (contacts) => {
-    // Sort contacts by actionTime
-    return contacts.sort((a, b) => {
+export const selectSortedparkings = createSelector(
+  [selectFilteredparkings],
+  (parkings) => {
+    // Sort parkings by actionTime
+    return parkings.sort((a, b) => {
       // Assuming there's an actionTime property in your contact object
       return new Date(b.actionTime) - new Date(a.actionTime);
     });
@@ -54,10 +51,10 @@ export const selectSortedContacts = createSelector(
 );
 
 
-export const selectGroupedFilteredContacts = createSelector(
-  [selectFilteredContacts],
-  (contacts) => {
-    return contacts
+export const selectGroupedFilteredparkings = createSelector(
+  [selectFilteredparkings],
+  (parkings) => {
+    return parkings
       .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
       .reduce((r, e) => {
         // get first letter of name of current element
@@ -72,13 +69,13 @@ export const selectGroupedFilteredContacts = createSelector(
   }
 );
 
-const contactsSlice = createSlice({
-  name: 'contactsApp/contacts',
-  initialState: contactsAdapter.getInitialState({
+const parkingSlice = createSlice({
+  name: 'parkingApp/parking',
+  initialState: parkingsAdapter.getInitialState({
     searchText: '',
   }),
   reducers: {
-    setContactsSearchText: {
+    setparkingsSearchText: {
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
@@ -86,14 +83,14 @@ const contactsSlice = createSlice({
     },
   },
   extraReducers: {
-    [getContacts.fulfilled]: (state, action) => {
+    [getLogs.fulfilled]: (state, action) => {
       const { data, routeParams } = action.payload;
-      contactsAdapter.setAll(state, data);
+      parkingsAdapter.setAll(state, data);
       state.searchText = '';
     },
   },
 });
 
-export const { setContactsSearchText } = contactsSlice.actions;
+export const { setparkingsSearchText } = parkingSlice.actions;
 
-export default contactsSlice.reducer;
+export default parkingSlice.reducer;

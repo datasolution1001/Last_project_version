@@ -11,6 +11,7 @@ import ContactsHeader from './ContactsHeader';
 import ContactsList from './ContactsList';
 import reducer from './store';
 import { getContacts } from './store/contactsSlice';
+import { ToastContainer } from 'react-toastify';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -36,7 +37,8 @@ function ContactsApp(props) {
   return (
     <Root
       header={<ContactsHeader pageLayout={pageLayout} />}
-      content={<ContactsList />}
+      content={<><ContactsList /><ToastContainer /></>
+    }
       ref={pageLayout}
       rightSidebarContent={<ContactsSidebarContent />}
       rightSidebarOpen={rightSidebarOpen}

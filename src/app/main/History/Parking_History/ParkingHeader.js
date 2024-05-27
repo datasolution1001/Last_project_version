@@ -7,15 +7,15 @@ import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { Box } from '@mui/system';
 import {
-  selectFilteredContacts,
+  selectFilteredparkings,
   selectSearchText,
-  setContactsSearchText,
-} from './store/contactsSlice';
+  setparkingsSearchText,
+} from './store/ParkingSlice';
 
 function ParkingHeader(props) {
   const dispatch = useDispatch();
   const searchText = useSelector(selectSearchText);
-  const filteredData = useSelector(selectFilteredContacts);
+  const filteredData = useSelector(selectFilteredparkings);
 
   return (
     <div className="p-24 sm:p-32 w-full border-b-1">
@@ -52,7 +52,7 @@ function ParkingHeader(props) {
           </FuseSvgIcon>
 
           <Input
-            placeholder="Search contacts"
+            placeholder="Search parkings"
             className="flex flex-1 px-16"
             disableUnderline
             fullWidth
@@ -60,7 +60,7 @@ function ParkingHeader(props) {
             inputProps={{
               'aria-label': 'Search',
             }}
-            onChange={(ev) => dispatch(setContactsSearchText(ev))}
+            onChange={(ev) => dispatch(setparkingsSearchText(ev))}
           />
         </Box>
       

@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import contacts from './contactsSlice';
+import parkings from './ParkingSlice';
 
 const reducer = combineReducers({
-  contacts
+  parkings
 });
 
 export default reducer;

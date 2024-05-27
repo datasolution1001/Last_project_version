@@ -32,7 +32,10 @@ import {
   selectContact,
   updateContact,
 } from '../store/contactSlice';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import { HiOutlineTrash } from 'react-icons/hi'; 
  const backgroundNum=Math.floor(Math.random() * 5) + 1;
 const schema = yup.object().shape({
   name: yup.string().required("You must enter a name"),
@@ -78,55 +81,60 @@ function ContactForm(props) {
 useEffect(() => {
     reset(contact);
 }, [contact]);
+const showToastSuccess = () => {
+  toast.success("Contact added successfully", {
+    position: "bottom-right",
+    style: { marginBottom: '6rem' }
+  });
+};
+const showToastUpdate = () => {
+  toast.info("Contact updated successfully", {
+    position: "bottom-right",
+    style: { marginBottom: '6rem' }
+  });
+};
+const showToastdelete = () => {
+  toast(<span className='flex flex-row items-center'>
+    <HiOutlineTrash className='text-red-500 px-10 icon-size-40' /> Contact deleted successfully
+  </span>, {
+    position: "bottom-right",
+    style: { marginBottom: '6rem' },
 
-const onSubmit = useCallback((data) => {
+
+  });
+};
+
+
+const  onSubmit = useCallback((data) => {
     if (id === 'new') {
-        dispatch(addContact(data)).then(() => {
-            navigate('/contacts');
+        dispatch(addContact(data))
+        
+        .then(() => {
+          
+          showToastSuccess();
+          navigate('/contacts');
+            
         });
     } else {
-        dispatch(updateContact(data)).then(() => {
+        dispatch(updateContact(data))
+       .then(() => {
+        
+        showToastUpdate();
             navigate('/contacts');
+            
         });
     }
 }, [dispatch, id, navigate]);
-  // useEffect(() => {
-  //   if (routeParams.id === 'new') {
-    
-  //       dispatch(newContact());
-    
-  //   } else {
-  //     dispatch(getContact(routeParams.id));
-  //   }
-  // }, [dispatch, routeParams]);
 
-  // useEffect(() => {
-  //   reset({ ...contact });
-  // }, [contact, reset]);
-
-
-
-  
-
-
-  // /**
-  //  * Form Submit
-  //  */
-  // function onSubmit(data,event) {
-  //   event.preventDefault(); 
-  //     if ((routeParams.id === 'new')) {
-  //       dispatch(addContact(data)).then(({ payload }) => {
-  //         navigate(`/contacts`);
-  //       })}
-  //     else {
-  //     dispatch(updateContact(data));
-  //     navigate(`/contacts`);
-  //   }
-  // }
 
   function handleRemoveContact() {
-    dispatch(removeContact(contact.id)).then(() => {
+    dispatch(removeContact(contact.id))
+    .then(() => {
+
+      showToastdelete();
       navigate('/contacts');
+
+     
     });
   }
 
@@ -134,7 +142,11 @@ const onSubmit = useCallback((data) => {
     return <FuseLoading />;
   }
 
-
+  const handleSubmitWithToast = () => {
+    showToastMessage();
+    handleSubmit(onSubmit)(); 
+  };
+  
   return (
     <>
       <Box
@@ -601,8 +613,8 @@ const onSubmit = useCallback((data) => {
       >
         {id !== 'new' && (
           <Button color="error" onClick={handleRemoveContact}>
-            Delete
-          </Button>
+              Delete
+            </Button>
         )}
         <Button className="ml-auto" component={NavLinkAdapter} to={-1}>
           Cancel
@@ -612,7 +624,8 @@ const onSubmit = useCallback((data) => {
           variant="contained"
           color="secondary"
           disabled={!isValid}
-          onClick={handleSubmit(onSubmit)}
+          onClick={ handleSubmit(onSubmit)}
+          
         >
           Save
         </Button>
